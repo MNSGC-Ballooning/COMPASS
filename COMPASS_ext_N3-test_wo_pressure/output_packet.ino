@@ -8,11 +8,10 @@ void sendDataPacket(){
   outputData.relTime = compassData.flightTime;
   outputData.t1 = compassData.T2*1000;                   // Setting the output packet data structure. 
   outputData.pressureMS = compassData.PressurePSI;
-  compassData.n3Adata.sampFlow = compassData.n3Adata.sampFlow/10; //Divide the value by 10 to prevent overflow
   memcpy(&outputData.bins[0],&compassData.n3Adata,56);  
   memcpy(&outputBytes, &outputData, 10);               //Pass the packet to the output array as bytes
   memcpy(&outputBytes[10], &outputData.pressureMS, PACKET-10); 
-  memcpy(&outputBytes[62], &outputData.temp, PACKET-62); 
+
   
   
   for (unsigned short i = 0; i < (PACKET-3); i++){        //Calculate the checksum this literally adds up the numbers contained within the bytes and checks if they are the same
